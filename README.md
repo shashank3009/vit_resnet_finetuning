@@ -1,16 +1,9 @@
 
 # Fine-Tuning ResNets and Vision Transformers on Skin Cancer and Art DL Datasets
 
-This repository contains code for fine-tuning **ResNets** and **Vision Transformers (ViT)** on two datasets:
-1. **Skin Cancer Dataset**: [marmal88/skin_cancer](https://huggingface.co/datasets/marmal88/skin_cancer)
-2. **Art DL Dataset**: [ArtDL](https://artdl.org/)
-
-The models are fine-tuned separately for each dataset.
-
----
 
 ## Table of Contents
-1. [Setup](#setup)
+1. [Introduction](#introduction)
 2. [Data Preparation](#data-preparation)
 3. [Model Checkpoints](#model-checkpoints)
 4. [Training](#training)
@@ -19,9 +12,15 @@ The models are fine-tuned separately for each dataset.
 
 ---
 
-## Setup
+## Introduction
 
-This repository is based on the official **TensorFlow Models** repository. The code has been modified to use **focal cross-entropy loss** to better address the class imbalance in the datasets.
+This repository contains code for fine-tuning **ResNets** and **Vision Transformers (ViT)** on two datasets:
+1. **Skin Cancer Dataset**: [marmal88/skin_cancer](https://huggingface.co/datasets/marmal88/skin_cancer)
+2. **Art DL Dataset**: [ArtDL](https://artdl.org/)
+
+The models are fine-tuned separately for each dataset.
+
+It is based on the official [TensorFlow Model Garden](https://github.com/tensorflow/models). The code has been modified to use **focal cross-entropy loss** to better address the class imbalance in the datasets.
 
 ---
 
