@@ -40,9 +40,9 @@ We need to create a JSON file which has metadata about each image. This is requi
 #### Example Command
 ```bash
 python3 convert_images_to_tfr.py --logtostderr \
-      --image_dir="/home/shashank/tensorflow_datasets/downloads/art_dl/ArtDL/JPEGImages" \
-      --image_info_file="/home/shashank/tensorflow_datasets/downloads/art_dl/ArtDL/train_images_info.json" \
-      --output_file_prefix="/home/shashank/tensorflow_datasets/tfrecords/ArtDL/train" \
+      --image_dir="/home/shashank/tensorflow_datasets/downloads/skin_cancer" \
+      --image_info_file="/home/shashank/tensorflow_datasets/downloads/skin_cancer/train_images_info.json" \
+      --output_file_prefix="/home/shashank/tensorflow_datasets/tfrecords/skin_cancer/train" \
       --num_shards=1
 ```
 
