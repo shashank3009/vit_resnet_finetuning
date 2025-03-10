@@ -20,7 +20,7 @@ This repository contains code for fine-tuning **ResNets** and **Vision Transform
 
 The models are fine-tuned separately for each dataset.
 
-It is based on the official [TensorFlow Model Garden](https://github.com/tensorflow/models). The code has been modified to use **focal cross-entropy loss** to better address the class imbalance in the datasets.
+It uses the official [TensorFlow Model Garden](https://github.com/tensorflow/models). I modified its code to use **focal cross-entropy loss** to better address the class imbalance in the datasets.
 
 ---
 
@@ -35,7 +35,7 @@ The datasets are converted into **TFRecords** for efficient training. The class 
 
 To create TFRecords, I modified the script (convert_images_to_tfr.py) to suit for image classification based on the official TensorFlow script: [create_coco_tf_record.py](https://github.com/tensorflow/models/blob/master/official/vision/data/create_coco_tf_record.py).
 
-We need to create a JSON file which has metadata about each image which is required to create tfrecords. I have shared an example file, and the command below to create tfrecords.
+We need to create a JSON file which has metadata about each image. This is required to create tfrecords. I have shared an example [ipython notebook](./data_prepare/data_prepare.ipynb) to create metadata JSON file, and the command below to create tfrecords for reference.
 
 #### Example Command
 ```bash
@@ -60,14 +60,15 @@ I used the following pre-trained checkpoints for ResNet and Vision Transformer:
 - **ResNet-50 Checkpoint**: [resnet-50-i224.tar.gz](https://storage.googleapis.com/tf_model_garden/vision/resnet/resnet-50-i224.tar.gz)
 - **Vision Transformer (ViT) Checkpoint**: [vit-deit-imagenet-b16.tar.gz](https://storage.googleapis.com/tf_model_garden/vision/vit/vit-deit-imagenet-b16.tar.gz)
 
-After downloading, extract the checkpoints and update the paths in the training files. 
+After downloading, extract the checkpoints and update the checkpoint paths in the training files. 
 
 ---
 
 ## Training
 
 ### Training Files
-In the training file, it imports the pre-trained configurations, so for fine-tuning we need to modify some parameters based on our task.
+In the training file, it imports the pre-trained configurations, so for fine-tuning we need to modify some parameters based on our task. I have created a separate config (each for ViT and ResNet) which I used to override the pre-trained configurations.
+- [ViT Configurations](./vit_config.yaml)
 
 There are four separate Python files for training:
 1. **ResNet on Skin Cancer Dataset**: `resnet_skin_cancer.py`
@@ -75,15 +76,16 @@ There are four separate Python files for training:
 3. **Vision Transformer on Skin Cancer Dataset**: `vit_skin_cancer.py`
 4. **Vision Transformer on Art DL Dataset**: `vit_art_dl.py`
 
+**To Do:** Add a single file each for ViT and ResNet.
+
 ### Modifications
-- **Focal Loss**: The code has been modified to use **focal loss** to handle class imbalance.
-- **GPU Training**: Training is performed on GPU for faster convergence. 
+- **Focal Loss**: I modified the TF Model Garden code to use **focal loss** to handle class imbalance.
 
 ---
 
 ## Results
 
-*Results will be updated soon.*
+- [Initial Experiment Results and Analysis](./docs/initial_experiments.md)
 
 ---
 
