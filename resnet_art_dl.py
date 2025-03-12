@@ -26,19 +26,14 @@ if __name__=="__main__":
     # Configure model
     exp_config.task.model.num_classes = 10
     exp_config.task.model.input_size = [224, 224, 3]
-    # exp_config.task.model.backbone.vit.patch_size = 16
-    # exp_config.task.model.backbone.resnet.model_id = 50
 
     # Configure training and testing data
     batch_size = 16
 
-    # exp_config.task.model.backbone.vit.pos_embed_shape = None
-    # exp_config.task.model.backbone.vit.pooler = "token"
-
     exp_config.task.train_data.input_path = '/home/shashank/tensorflow_datasets/tfrecords/ArtDL/train-00000-of-00001.tfrecord'
     exp_config.task.train_data.global_batch_size = batch_size
 
-    exp_config.task.validation_data.input_path = '/home/shashank/tensorflow_datasets/tfrecords/ArtDL/test-00000-of-00001.tfrecord'
+    exp_config.task.validation_data.input_path = '/home/shashank/tensorflow_datasets/tfrecords/ArtDL/val-00000-of-00001.tfrecord'
     exp_config.task.validation_data.global_batch_size = batch_size
 
     exp_config.task.losses.alpha = 0.25
@@ -59,8 +54,6 @@ if __name__=="__main__":
 
     exp_config.task.init_checkpoint = '/home/shashank/cv/vit_resnet_finetuning/checkpoints/resnet-50-i224/'
     exp_config.task.init_checkpoint_modules = 'backbone'
-
-    # exp_config.task.train_data.color_type = 'rgb'
 
     logical_device_names = [logical_device.name for logical_device in tf.config.list_logical_devices()]
 

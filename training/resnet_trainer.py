@@ -20,7 +20,7 @@ sys.path.append('/home/shashank/tapestry/models')
 from official.vision.serving import export_saved_model_lib
 import tensorflow_models as tfm
 
-class ViTModelTrainer:
+class ResNetModelTrainer:
     def __init__(self, config_path, model_dir):
         self.config_path = config_path
         self.model_dir = model_dir
@@ -31,7 +31,7 @@ class ViTModelTrainer:
     def load_config(self):
         """Load and override experiment configuration from YAML file."""
         try:
-            self.exp_config = tfm.core.exp_factory.get_exp_config('vit_imagenet_pretrain')
+            self.exp_config = tfm.core.exp_factory.get_exp_config('resnet_imagenet')
             with open(self.config_path, "r") as file:
                 override_params = yaml.full_load(file)
             self.exp_config.override(override_params, is_strict=False)
@@ -106,11 +106,11 @@ class ViTModelTrainer:
 
 def main():
     # Configuration paths
-    config_path = "/home/shashank/cv/vit_resnet_finetuning/configs/vit_config.yaml"
-    model_dir = "/home/shashank/cv/vit_resnet_finetuning/model_experiments/vit_baseline_bs16"
+    config_path = "/home/shashank/cv/vit_resnet_finetuning/configs/resnet_config.yaml"
+    model_dir = "/home/shashank/cv/vit_resnet_finetuning/model_experiments/resnet_baseline_bs16"
 
     # Initialize trainer
-    trainer = ViTModelTrainer(config_path, model_dir)
+    trainer = ResNetModelTrainer(config_path, model_dir)
 
     # Load configuration
     trainer.load_config()
