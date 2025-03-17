@@ -26,7 +26,7 @@ The initial plan was to fine-tune these models on the datasets, but the journey 
 ---
 
 #### **4. The Hardware and Setup**
-All experiments were run on an **NVIDIA Titan XP GPU**, leveraging mixed precision training (`float16`) to speed up training and reduce memory usage. The training setup used the **Categorical Cross Entropy** and  **AdamW optimizer** with a **batch size of 32** and **cosine decay learning rate schedule**, starting at `0.0001` and decaying over `90,000 steps`. For more information on the parameters, refer to the respective configuration files:
+All experiments were run on an **NVIDIA Titan XP GPU**, leveraging mixed precision training (`float16`) to speed up training and reduce memory usage. The training setup used the **Categorical Cross Entropy** and  **AdamW optimizer** with a **batch size of 16** and **cosine decay learning rate schedule**, starting at `0.0001` and decaying over `90,000 steps`. For more information on the parameters, refer to the respective configuration files:
 - [ViT Configuration](../vit_config.yaml)
 
 ---
