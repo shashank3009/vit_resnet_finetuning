@@ -33,5 +33,3 @@ python3 convert_images_to_tfr.py --logtostderr \
 - **`num_shards`**: Number of shards to split the dataset into.  
 
 ---
-
-This structured approach ensures efficient data handling and seamless integration with TensorFlow's training pipeline. Let me know if you need further refinements!
