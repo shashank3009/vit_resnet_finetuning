@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/shashank/tapestry/models/')
+sys.path.append('/home/shashank/tfgarden/models/')
 
 r"""Convert raw COCO dataset to TFRecord format.
 
