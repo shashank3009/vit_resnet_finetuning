@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # Add custom model path to sys.path
-sys.path.append('/home/shashank/tapestry/models')
+sys.path.append('/home/shashank/tfgarden/models')
 from official.vision.serving import export_saved_model_lib
 import tensorflow_models as tfm
 
