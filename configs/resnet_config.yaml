@@ -1,3 +1,5 @@
+debug_mode: false # review
+device: GPU # review
 runtime:
   all_reduce_alg: null
   batchnorm_spatial_persistent: false
@@ -27,12 +29,12 @@ task:
     report_per_class_precision_and_recall: false
     top_k: 5
   freeze_backbone: false
-  init_checkpoint: /home/shashank/cv/vit_skin_cancer/checkpoints/resnet-50-i224/
+  init_checkpoint: /home/shashank/cv/vit_resnet_finetuning/checkpoints/resnet-50-i224
   init_checkpoint_modules: backbone
   losses:
     alpha: 0.25
     gamma: 2
-    l2_weight_decay: 0.0001
+    l2_weight_decay: 0.0
     label_smoothing: 0.1
     loss_weight: 1.0
     one_hot: true
@@ -40,8 +42,9 @@ task:
     use_binary_cross_entropy: false
     use_categorical_focal_loss: true
     use_focal_loss: false
+    use_class_weights: false
   model:
-    add_head_batch_norm: false
+    add_head_batch_norm: true
     backbone:
       resnet:
         bn_trainable: true
@@ -56,9 +59,9 @@ task:
       type: resnet
     dropout_rate: 0.0
     input_size: [224, 224, 3]
-    kernel_initializer: random_uniform
+    kernel_initializer: he_normal
     norm_activation:
-      activation: relu
+      activation: gelu
       norm_epsilon: 1.0e-05
       norm_momentum: 0.9
       use_sync_bn: false
@@ -71,7 +74,7 @@ task:
     aug_crop: true
     aug_policy: null
     aug_rand_hflip: true
-    aug_type: null
+    aug_type: null 
     autotune_algorithm: null
     block_length: 1
     cache: false
@@ -101,7 +104,7 @@ task:
     is_training: true
     label_field_key: image/label
     mixup_and_cutmix: null
-    prefetch_buffer_size: 32
+    prefetch_buffer_size: 16
     ram_budget: null
     randaug_magnitude: 10
     random_erasing: null
@@ -156,7 +159,7 @@ task:
     is_training: false
     label_field_key: image/label
     mixup_and_cutmix: null
-    prefetch_buffer_size: 32
+    prefetch_buffer_size: 16
     ram_budget: null
     randaug_magnitude: 10
     random_erasing: null
@@ -177,49 +180,54 @@ task:
     weights: null
 trainer:
   allow_tpu_summary: false
-  best_checkpoint_eval_metric: ''
-  best_checkpoint_export_subdir: ''
+  best_checkpoint_eval_metric: 'f1_score' # review
+  best_checkpoint_export_subdir: 'best_f1_score' # review
   best_checkpoint_metric_comp: higher
-  checkpoint_interval: 90000
+  checkpoint_interval: 5000
   continuous_eval_timeout: 3600
   eval_tf_function: true
   eval_tf_while_loop: false
   loss_upper_bound: 1000000.0
-  max_to_keep: 5
+  max_to_keep: 10
   optimizer_config:
     ema: null
     learning_rate:
       cosine:
-        alpha: 0.0
-        decay_steps: 90000
+        alpha: 0.00001
+        decay_steps: 50000
         initial_learning_rate: 0.0001
         name: CosineDecay
         offset: 0
       type: cosine
     optimizer:
-      sgd:
+      adamw:
+        amsgrad: false
+        beta_1: 0.9
+        beta_2: 0.999
         clipnorm: null
         clipvalue: null
-        decay: 0.0
+        epsilon: 1.0e-07
+        exclude_from_weight_decay: null
         global_clipnorm: null
-        momentum: 0.9
-        name: SGD
-        nesterov: false
-      type: sgd
+        gradient_clip_norm: 0.0
+        include_in_weight_decay: .*(kernel|weight):0$
+        name: AdamWeightDecay
+        weight_decay_rate: 0.05
+      type: adamw
     warmup:
       linear:
         name: linear
-        warmup_learning_rate: 0
-        warmup_steps: 100
+        warmup_learning_rate: 0.0002
+        warmup_steps: 1000
       type: linear
   preemption_on_demand_checkpoint: true
   recovery_begin_steps: 0
   recovery_max_trials: 0
   steps_per_loop: 1000
   summary_interval: 1000
-  train_steps: 90000
+  train_steps: 50000
   train_tf_function: true
   train_tf_while_loop: true
-  validation_interval: 9000
+  validation_interval: 2000
   validation_steps: -1
   validation_summary_subdir: validation

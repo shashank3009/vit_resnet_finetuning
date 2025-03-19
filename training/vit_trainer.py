@@ -107,7 +107,7 @@ class ViTModelTrainer:
 def main():
     # Configuration paths
     config_path = "/home/shashank/cv/vit_resnet_finetuning/configs/vit_config.yaml"
-    model_dir = "/home/shashank/cv/vit_resnet_finetuning/model_experiments/vit_baseline_bs16_focal_lr"        
+    model_dir = "/home/shashank/cv/vit_resnet_finetuning/model_experiments_new/4_drp_aug_modifications_3"        
 
     # Initialize trainer
     trainer = ViTModelTrainer(config_path, model_dir)

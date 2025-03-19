@@ -107,7 +107,7 @@ class ResNetModelTrainer:
 def main():
     # Configuration paths
     config_path = "/home/shashank/cv/vit_resnet_finetuning/configs/resnet_config.yaml"
-    model_dir = "/home/shashank/cv/vit_resnet_finetuning/model_experiments/resnet_baseline_bs16"
+    model_dir = "/home/shashank/cv/vit_resnet_finetuning/model_experiments_new/resnet_baseline_bs16_2"
 
     # Initialize trainer
     trainer = ResNetModelTrainer(config_path, model_dir)

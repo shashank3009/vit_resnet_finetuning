@@ -37,25 +37,15 @@ task:
     l2_weight_decay: 0.0
     label_smoothing: 0.1 # review
     loss_weight: 1.0
-    one_hot: true # review
-    soft_labels: false # review
+    one_hot: false # review
+    soft_labels: true # review
     use_binary_cross_entropy: false
-    use_categorical_focal_loss: false # review
+    use_categorical_focal_loss: true # review
     use_focal_loss: false # review
     use_class_weights: false # review
-    class_weights:
-      0: 109.2  # Anthony of Padua
-      1: 16.5   # Francis of Assisi
-      2: 13.7   # Jerome
-      3: 16.2   # John the Baptist
-      4: 17.4   # Mary Magdalene
-      5: 30.9   # Paul
-      6: 13.3   # Peter
-      7: 56.5   # Saint Dominic
-      8: 29.2   # Saint Sebastian
-      9: 1.0    # Virgin Mary      
+    class_weights: [109.2, 16.5, 13.7, 16.2, 17.4, 30.9, 13.3, 56.5, 29.2, 1.0]    
   model:
-    add_head_batch_norm: false
+    add_head_batch_norm: true
     backbone:
       type: vit
       vit:
@@ -72,20 +62,20 @@ task:
         pos_embed_shape: null
         representation_size: 0
         transformer:
-          attention_dropout_rate: 0.0
-          dropout_rate: 0.0
+          attention_dropout_rate: 0.1
+          dropout_rate: 0.1
           mlp_dim: 3072
           num_heads: 12
           num_layers: 12
         transformer_partition_dims: null
-    dropout_rate: 0.0
+    dropout_rate: 0.1
     input_size: [224, 224, 3]
-    kernel_initializer: zeros
+    kernel_initializer: he_normal
     norm_activation:
-      activation: relu
+      activation: gelu
       norm_epsilon: 0.001
       norm_momentum: 0.99
-      use_sync_bn: false
+      use_sync_bn: true
     num_classes: 10 # review
     output_softmax: false
   model_output_keys: []
@@ -129,11 +119,16 @@ task:
     file_type: tfrecord
     global_batch_size: 16 # review
     image_field_key: image/encoded
-    input_path: /home/shashank/tensorflow_datasets/tfrecords/ArtDL/train-00000-of-00001.tfrecord
+    input_path: /home/shashank/tensorflow_datasets/tfrecords/ArtDL/train-00000-of-00001.tfrecord # review
     is_multilabel: false
     is_training: true
     label_field_key: image/label
-    mixup_and_cutmix: null # review
+    mixup_and_cutmix:
+      cutmix_alpha: 1.0
+      label_smoothing: 0.1
+      mixup_alpha: 0.8
+      prob: 1.0
+      switch_prob: 0.5 
     prefetch_buffer_size: null
     ram_budget: null
     randaug_magnitude: 10
@@ -184,7 +179,7 @@ task:
     file_type: tfrecord
     global_batch_size: 16 # review
     image_field_key: image/encoded
-    input_path: /home/shashank/tensorflow_datasets/tfrecords/ArtDL/val-00000-of-00001.tfrecord
+    input_path: /home/shashank/tensorflow_datasets/tfrecords/ArtDL/val-00000-of-00001.tfrecord # review
     is_multilabel: false
     is_training: false
     label_field_key: image/label
@@ -223,7 +218,7 @@ trainer:
     ema: null
     learning_rate:
       cosine:
-        alpha: 0.0
+        alpha: 0.00001
         decay_steps: 30000 # review
         initial_learning_rate: 0.0001 # review
         name: CosineDecay
@@ -247,8 +242,8 @@ trainer:
     warmup:
       linear:
         name: linear
-        warmup_learning_rate: 0
-        warmup_steps: 20
+        warmup_learning_rate: 0.0002
+        warmup_steps: 1000
       type: linear
   preemption_on_demand_checkpoint: true
   recovery_begin_steps: 0
