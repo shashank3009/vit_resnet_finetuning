@@ -272,6 +272,49 @@ The best results were achieved with the following configuration:
 | **F1-Score**      | 0.60          | 0.81             |
 | **Accuracy**      | 0.83          | -                |
 
+---
+
+#### Further Tuning of the Parameters
+Since the initial experiments did not yield significant improvements, I manually tuned the parameters on top of the best configuration from previous experiments. The key changes included:
+
+1. **Initialization of the Classification Head**:
+   - The classification head was initialized using `he_normal` (previously, it was set to zeros by default, which I had missed).
+
+2. **Activation Function**:
+   - Replaced `relu` with `gelu` activation in the classification head.
+
+3. **Stochastic Depth Rate**:
+   - Reduced the `stochastic_depth_rate` since the model was not overfitting.
+
+With these adjustments, the results improved significantly, with the F1 score increasing from **0.6 to 0.72**. Below are the detailed metrics:
+
+- **Confusion Matrix**:  
+  ![Confusion Matrix](./docs/images/vit_best_further.png)
+
+- **Classification Report**:
+
+| Class | Precision | Recall | F1-Score | Support |
+|-------|-----------|--------|----------|---------|
+| 0     | 0.70      | 0.47   | 0.56     | 15      |
+| 1     | 0.75      | 0.78   | 0.77     | 99      |
+| 2     | 0.80      | 0.71   | 0.75     | 119     |
+| 3     | 0.83      | 0.85   | 0.84     | 101     |
+| 4     | 0.86      | 0.67   | 0.75     | 94      |
+| 5     | 0.56      | 0.28   | 0.38     | 53      |
+| 6     | 0.72      | 0.64   | 0.68     | 123     |
+| 7     | 0.79      | 0.76   | 0.77     | 29      |
+| 8     | 0.89      | 0.73   | 0.80     | 56      |
+| 9     | 0.92      | 0.96   | 0.94     | 1637    |
+
+| **Metric**       | **Macro Avg** | **Weighted Avg** |
+|-------------------|---------------|------------------|
+| **Precision**     | 0.78          | 0.88             |
+| **Recall**        | 0.69          | 0.88             |
+| **F1-Score**      | 0.72          | 0.88             |
+| **Accuracy**      | 0.88          | -                |
+
+---
+
 For detailed results of all the experiments, refer to [evaluation](./docs/evaluation.ipynb) notebook.
 
 ---
